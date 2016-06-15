@@ -1,0 +1,346 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0047BC0C1D0EA14C007A934F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0047BC0B1D0EA14C007A934F /* AppDelegate.swift */; };
+		0047BC0E1D0EA14C007A934F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0047BC0D1D0EA14C007A934F /* ViewController.swift */; };
+		0047BC111D0EA14C007A934F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0047BC0F1D0EA14C007A934F /* Main.storyboard */; };
+		0047BC131D0EA14C007A934F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0047BC121D0EA14C007A934F /* Assets.xcassets */; };
+		0047BC161D0EA14C007A934F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0047BC141D0EA14C007A934F /* LaunchScreen.storyboard */; };
+		0047BC211D0EA1EC007A934F /* LWPhotoRootTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0047BC201D0EA1EC007A934F /* LWPhotoRootTableViewController.swift */; };
+		0047BC231D0EA231007A934F /* LWPhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0047BC221D0EA231007A934F /* LWPhotoPickerController.swift */; };
+		006A6A121D0FBAAF00861696 /* LWPhotoGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006A6A111D0FBAAF00861696 /* LWPhotoGridViewController.swift */; };
+		006A6A171D0FC00E00861696 /* AGIPC-Checkmark-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A131D0FC00E00861696 /* AGIPC-Checkmark-0.png */; };
+		006A6A181D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A141D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png */; };
+		006A6A191D0FC00E00861696 /* AGIPC-Checkmark-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A151D0FC00E00861696 /* AGIPC-Checkmark-1.png */; };
+		006A6A1A1D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A161D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png */; };
+		00C19DCC1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C19DCB1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift */; };
+		00F178C01D11646700503A48 /* LWPhotoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F178BF1D11646700503A48 /* LWPhotoBaseViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0047BC081D0EA14C007A934F /* LWPhotoPickerController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LWPhotoPickerController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0047BC0B1D0EA14C007A934F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0047BC0D1D0EA14C007A934F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0047BC101D0EA14C007A934F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0047BC121D0EA14C007A934F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0047BC151D0EA14C007A934F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0047BC171D0EA14C007A934F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0047BC201D0EA1EC007A934F /* LWPhotoRootTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoRootTableViewController.swift; sourceTree = "<group>"; };
+		0047BC221D0EA231007A934F /* LWPhotoPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoPickerController.swift; sourceTree = "<group>"; };
+		006A6A111D0FBAAF00861696 /* LWPhotoGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoGridViewController.swift; sourceTree = "<group>"; };
+		006A6A131D0FC00E00861696 /* AGIPC-Checkmark-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-0.png"; sourceTree = "<group>"; };
+		006A6A141D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-0@2x.png"; sourceTree = "<group>"; };
+		006A6A151D0FC00E00861696 /* AGIPC-Checkmark-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-1.png"; sourceTree = "<group>"; };
+		006A6A161D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-1@2x.png"; sourceTree = "<group>"; };
+		00C19DCB1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoBrowseViewController.swift; sourceTree = "<group>"; };
+		00F178BF1D11646700503A48 /* LWPhotoBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoBaseViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0047BC051D0EA14C007A934F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0047BBFF1D0EA14C007A934F = {
+			isa = PBXGroup;
+			children = (
+				0047BC0A1D0EA14C007A934F /* LWPhotoPickerController */,
+				0047BC091D0EA14C007A934F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0047BC091D0EA14C007A934F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0047BC081D0EA14C007A934F /* LWPhotoPickerController.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0047BC0A1D0EA14C007A934F /* LWPhotoPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				0047BC1F1D0EA1CE007A934F /* Claass */,
+				0047BC0B1D0EA14C007A934F /* AppDelegate.swift */,
+				0047BC0D1D0EA14C007A934F /* ViewController.swift */,
+				0047BC0F1D0EA14C007A934F /* Main.storyboard */,
+				0047BC121D0EA14C007A934F /* Assets.xcassets */,
+				0047BC141D0EA14C007A934F /* LaunchScreen.storyboard */,
+				0047BC171D0EA14C007A934F /* Info.plist */,
+			);
+			path = LWPhotoPickerController;
+			sourceTree = "<group>";
+		};
+		0047BC1F1D0EA1CE007A934F /* Claass */ = {
+			isa = PBXGroup;
+			children = (
+				0047BC221D0EA231007A934F /* LWPhotoPickerController.swift */,
+				0047BC201D0EA1EC007A934F /* LWPhotoRootTableViewController.swift */,
+				006A6A111D0FBAAF00861696 /* LWPhotoGridViewController.swift */,
+				00C19DCB1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift */,
+				00F178BF1D11646700503A48 /* LWPhotoBaseViewController.swift */,
+				006A6A1B1D0FC01500861696 /* Sources */,
+			);
+			name = Claass;
+			sourceTree = "<group>";
+		};
+		006A6A1B1D0FC01500861696 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				006A6A131D0FC00E00861696 /* AGIPC-Checkmark-0.png */,
+				006A6A141D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png */,
+				006A6A151D0FC00E00861696 /* AGIPC-Checkmark-1.png */,
+				006A6A161D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0047BC071D0EA14C007A934F /* LWPhotoPickerController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0047BC1A1D0EA14C007A934F /* Build configuration list for PBXNativeTarget "LWPhotoPickerController" */;
+			buildPhases = (
+				0047BC041D0EA14C007A934F /* Sources */,
+				0047BC051D0EA14C007A934F /* Frameworks */,
+				0047BC061D0EA14C007A934F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LWPhotoPickerController;
+			productName = LWPhotoPickerController;
+			productReference = 0047BC081D0EA14C007A934F /* LWPhotoPickerController.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0047BC001D0EA14C007A934F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = lailingwei;
+				TargetAttributes = {
+					0047BC071D0EA14C007A934F = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 0047BC031D0EA14C007A934F /* Build configuration list for PBXProject "LWPhotoPickerController" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0047BBFF1D0EA14C007A934F;
+			productRefGroup = 0047BC091D0EA14C007A934F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0047BC071D0EA14C007A934F /* LWPhotoPickerController */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0047BC061D0EA14C007A934F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0047BC161D0EA14C007A934F /* LaunchScreen.storyboard in Resources */,
+				006A6A181D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png in Resources */,
+				006A6A191D0FC00E00861696 /* AGIPC-Checkmark-1.png in Resources */,
+				0047BC131D0EA14C007A934F /* Assets.xcassets in Resources */,
+				0047BC111D0EA14C007A934F /* Main.storyboard in Resources */,
+				006A6A1A1D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png in Resources */,
+				006A6A171D0FC00E00861696 /* AGIPC-Checkmark-0.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0047BC041D0EA14C007A934F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00C19DCC1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift in Sources */,
+				0047BC211D0EA1EC007A934F /* LWPhotoRootTableViewController.swift in Sources */,
+				00F178C01D11646700503A48 /* LWPhotoBaseViewController.swift in Sources */,
+				0047BC0E1D0EA14C007A934F /* ViewController.swift in Sources */,
+				006A6A121D0FBAAF00861696 /* LWPhotoGridViewController.swift in Sources */,
+				0047BC0C1D0EA14C007A934F /* AppDelegate.swift in Sources */,
+				0047BC231D0EA231007A934F /* LWPhotoPickerController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0047BC0F1D0EA14C007A934F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0047BC101D0EA14C007A934F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0047BC141D0EA14C007A934F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0047BC151D0EA14C007A934F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0047BC181D0EA14C007A934F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0047BC191D0EA14C007A934F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0047BC1B1D0EA14C007A934F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LWPhotoPickerController/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.csym.LWPhotoPickerController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0047BC1C1D0EA14C007A934F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LWPhotoPickerController/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.csym.LWPhotoPickerController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0047BC031D0EA14C007A934F /* Build configuration list for PBXProject "LWPhotoPickerController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0047BC181D0EA14C007A934F /* Debug */,
+				0047BC191D0EA14C007A934F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0047BC1A1D0EA14C007A934F /* Build configuration list for PBXNativeTarget "LWPhotoPickerController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0047BC1B1D0EA14C007A934F /* Debug */,
+				0047BC1C1D0EA14C007A934F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0047BC001D0EA14C007A934F /* Project object */;
+}
