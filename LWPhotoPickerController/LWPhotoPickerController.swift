@@ -9,16 +9,17 @@
 import UIKit
 import Photos
 
+private let AlertTitle = NSLocalizedString("错误", comment: "")
+private let AlertMessage = NSLocalizedString("该应用未获取访问相册的权限", comment: "")
+private let AlertOk = NSLocalizedString("确定", comment: "")
+private let AlertSetting = NSLocalizedString("设置", comment: "")
+let OriginalTitle = NSLocalizedString("原图", comment: "")
+let DoneTitle = NSLocalizedString("完成", comment: "")
+
 let kDidDoneSelectedAssetsNotification = "kDidDoneSelectedAssetsNotification"
 typealias DidDoneSelectedAssetHandler = ((imageDatas: [NSData]) -> Void)
-
-private let AlertTitle = NSLocalizedString("Photo Error", comment: "")
-private let AlertMessage = NSLocalizedString("This app is not authorized to use Photo", comment: "")
-private let AlertOk = NSLocalizedString("Cancel", comment: "")
-private let AlertSetting = NSLocalizedString("Settings", comment: "")
-
-
 private var PhotoPickerQueue = "PhotoPickerQueue"
+
 
 class LWPhotoPickerController: NSObject {
     

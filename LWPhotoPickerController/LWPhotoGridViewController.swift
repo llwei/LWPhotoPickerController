@@ -15,8 +15,6 @@ private let ScreenWidth = UIScreen.mainScreen().bounds.size.width
 private let ScreenHeight = UIScreen.mainScreen().bounds.size.height
 
 private let HoriCount: Int = 4
-private let OriginalTitle = NSLocalizedString("原图", comment: "")
-private let DoneTitle = NSLocalizedString("完成", comment: "")
 
 
 class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, LWPhotoGridCellDelegate {

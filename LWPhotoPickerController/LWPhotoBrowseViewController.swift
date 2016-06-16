@@ -15,7 +15,6 @@ private let ScreenWidth = UIScreen.mainScreen().bounds.size.width
 private let ScreenHeight = UIScreen.mainScreen().bounds.size.height
 
 private let SelectedBtnSize: CGFloat = 40.0
-private let DoneTitle = NSLocalizedString("完成", comment: "")
 
 typealias UpdateSelectedHandler = ((add: Bool, restorationId: String, indexPath: NSIndexPath) -> Void)
 
