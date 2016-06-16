@@ -10,23 +10,21 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
     private lazy var photoPicker: LWPhotoPickerController = {
         return LWPhotoPickerController()
     }()
     
-    @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
-
     
     // MARK: - Target actions
     
     @IBAction func showPhotoLibrary(sender: UIButton) {
         
-        photoPicker.presentFromViewController(self, maxSelectedCount: 4) {
+        photoPicker.show(withMaxSelectedCount: 9) {
             [unowned self] (imageDatas) in
             
             print(imageDatas.count)
@@ -35,6 +33,7 @@ class ViewController: UIViewController {
                 self.imageView.image = UIImage(data: data)
             }
         }
+
     }
 
 

@@ -15,8 +15,8 @@ private let ScreenWidth = UIScreen.mainScreen().bounds.size.width
 private let ScreenHeight = UIScreen.mainScreen().bounds.size.height
 
 private let HoriCount: Int = 4
-private let OriginalTitle = NSLocalizedString("Original", comment: "")
-private let DoneTitle = NSLocalizedString("Done", comment: "")
+private let OriginalTitle = NSLocalizedString("原图", comment: "")
+private let DoneTitle = NSLocalizedString("完成", comment: "")
 
 
 class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, LWPhotoGridCellDelegate {
@@ -25,7 +25,6 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
     // MARK: - Properties
     
     private let imageManager = PHCachingImageManager()
-    private var doneItem: UIBarButtonItem!
     private var originalItem: UIBarButtonItem!
     private var collectionView: UICollectionView!
     
@@ -107,7 +106,7 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
         let doneItem = UIBarButtonItem(title: DoneTitle,
                                        style: .Done,
                                        target: self,
-                                       action: #selector(LWPhotoGridViewController.doneItemWasClick))
+                                       action: #selector(LWPhotoGridViewController.didClickDoneItemAction))
         
         doneItem.enabled = false
         doneItem.tintColor = UIColor.orangeColor()
@@ -169,12 +168,9 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
         } else {
             sender.tintColor = UIColor.lightGrayColor()
         }
-        
     }
     
-    func doneItemWasClick() {
-       didClickDoneItemAction()
-    }
+ 
     
     
     func didClickPhotoGridCell(selectedButton button: UIButton, representedAssetIdentfier identifier: String?) {
@@ -300,7 +296,9 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
         return assets
     }
     
-    
+    private func updateOriginalTitle() {
+        
+    }
     
     
     

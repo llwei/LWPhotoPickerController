@@ -15,7 +15,7 @@ private let ScreenWidth = UIScreen.mainScreen().bounds.size.width
 private let ScreenHeight = UIScreen.mainScreen().bounds.size.height
 
 private let SelectedBtnSize: CGFloat = 40.0
-private let DoneTitle = NSLocalizedString("Done", comment: "")
+private let DoneTitle = NSLocalizedString("完成", comment: "")
 
 typealias UpdateSelectedHandler = ((add: Bool, restorationId: String, indexPath: NSIndexPath) -> Void)
 
@@ -25,7 +25,6 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     
     var currentIndex: Int!
     
-    private var doneItem: UIBarButtonItem!
     private var collectionView: UICollectionView!
     private var selectedButton: UIButton!
     private var updateSelectedHandler: UpdateSelectedHandler?
@@ -61,7 +60,7 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
         let doneItem = UIBarButtonItem(title: itemTitle,
                                        style: .Done,
                                        target: self,
-                                       action: #selector(LWPhotoBrowseViewController.doneItemWasClick))
+                                       action: #selector(LWPhotoBrowseViewController.didClickDoneItemAction))
         doneItem.enabled = enabled
         doneItem.tintColor = UIColor.orangeColor()
         
@@ -113,6 +112,17 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
         }
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let statusBarHidden = UIApplication.sharedApplication().statusBarHidden
+        let navigationBarHeight = navigationController?.navigationBar.bounds.size.height ?? 44.0
+        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        flowLayout.itemSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height - navigationBarHeight - (statusBarHidden ? 0 : 20))
+        collectionView.collectionViewLayout = flowLayout
+    }
+    
     
     deinit {
         print("LWPhotoBrowseViewController deinit")
@@ -175,7 +185,7 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     
         // Update title
         currentIndex = page
-        title = "\(page + 1)" + "/" + "\(assetResult?.count)"
+        title = "\(page + 1)" + "/" + "\(assetResult?.count ?? 1)"
         
         // Update selected button
         if let asset = assetResult?[page] as? PHAsset {
@@ -211,10 +221,6 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     }
     
     
-    func doneItemWasClick() {
-        didClickDoneItemAction()
-    }
-    
     
     // MARK: - Public methods
     
@@ -242,7 +248,7 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
             let size = CGSize(width: CGFloat(asset.pixelWidth), height: CGFloat(asset.pixelHeight))
             PHImageManager.defaultManager().requestImageForAsset(asset,
                                                                  targetSize: size,
-                                                                 contentMode: .Default,
+                                                                 contentMode: .AspectFit,
                                                                  options: option,
                                                                  resultHandler: { (image: UIImage?, info: [NSObject : AnyObject]?) in
                                                                     
@@ -267,7 +273,7 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
 
 
 
-class LWPhotoBrowseCell: UICollectionViewCell {
+class LWPhotoBrowseCell: UICollectionViewCell, UIScrollViewDelegate {
     
     // MARK: - Properties
     
@@ -278,17 +284,19 @@ class LWPhotoBrowseCell: UICollectionViewCell {
         }
     }
     
-    private var imageView = UIImageView()
-    
+    private lazy var imageView: UIImageView = {
+        let lazyImageView = UIImageView()
+        lazyImageView.contentMode = .ScaleAspectFit
+        return lazyImageView
+    }()
+
     
     // MARK: - Life cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        imageView.contentMode = .ScaleAspectFit
         contentView.addSubview(imageView)
-        
         addConstranints()
     }
     
@@ -298,9 +306,8 @@ class LWPhotoBrowseCell: UICollectionViewCell {
     
  
     private func addConstranints() {
-    
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         let imgViewHs = NSLayoutConstraint.constraintsWithVisualFormat("H:|[imageView]|",
                                                                        options: .DirectionLeadingToTrailing,
                                                                        metrics: nil,
@@ -313,6 +320,9 @@ class LWPhotoBrowseCell: UICollectionViewCell {
         NSLayoutConstraint.activateConstraints(imgViewHs)
         NSLayoutConstraint.activateConstraints(imgViewVs)
     }
+    
+    
+    // MARK: - UIScrollViewDelegate
     
 }
 

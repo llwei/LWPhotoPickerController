@@ -108,9 +108,13 @@ class LWPhotoPickerController: NSObject {
     
     // MARK: - Public methods
     
-    func presentFromViewController(fromVC: UIViewController,
-                                   maxSelectedCount count: UInt,
-                                                    completionHandler: DidDoneSelectedAssetHandler?) {
+    /**
+     弹出图片选择器
+     
+     - parameter count:             选择图片数量的最大值
+     - parameter completionHandler: 结束回调
+     */
+    func show(withMaxSelectedCount count: UInt, completionHandler: DidDoneSelectedAssetHandler?) {
     
         checkAuthorizationStatus()
         
@@ -124,7 +128,9 @@ class LWPhotoPickerController: NSObject {
                 
                 // Present vc
                 self.navigationController = UINavigationController(rootViewController: photoRootTVC)
-                fromVC.presentViewController(self.navigationController!, animated: true, completion: nil)
+                if let rootVC = UIApplication.sharedApplication().keyWindow?.rootViewController {
+                    rootVC.presentViewController(self.navigationController!, animated: true, completion: nil)
+                }
             })
         }
         

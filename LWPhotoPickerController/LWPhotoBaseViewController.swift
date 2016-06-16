@@ -18,7 +18,7 @@ class LWPhotoBaseViewController: UIViewController {
     var assetResult: PHFetchResult?
     var original: Bool = false
     var selectedRestorationId = [String]()
-
+    var doneItem: UIBarButtonItem!
     
     func didClickDoneItemAction() {
         guard let assetResult = assetResult where selectedRestorationId.count > 0 else { return }
@@ -28,50 +28,44 @@ class LWPhotoBaseViewController: UIViewController {
         
         let option = PHImageRequestOptions()
         option.synchronous = true
-        option.version = .Original
-        
+
         for i in 0..<assetResult.count {
             if let asset = assetResult[i] as? PHAsset {
                 if selectedRestorationId.contains(asset.localIdentifier) {
-                    let size: CGSize = original ? PHImageManagerMaximumSize : CGSize(width: CGFloat(asset.pixelWidth) / 3, height: CGFloat(asset.pixelHeight) / 3)
-                    
+
                     let manager = PHImageManager.defaultManager()
-                    manager.requestImageForAsset(asset,
-                                                 targetSize: size,
-                                                 contentMode: .Default,
-                                                 options: option,
-                                                 resultHandler: { (image: UIImage?, info: [NSObject : AnyObject]?) in
-                                                    
-                                                    if let data = UIImageJPEGRepresentation(image!, 1.0) {
-                                                        results.append(data)
+                    manager.requestImageDataForAsset(asset,
+                                                     options: option,
+                                                     resultHandler: { (data: NSData?, _, _, _) in
+                                                        
+                                                        if let data = data {
+                                                            if self.original {
+                                                                results.append(data)
+                                                            } else {
+                                                                if let image = UIImage(data: data) {
+                                                                    if let imageData = UIImageJPEGRepresentation(image, 0.5) {
+                                                                        results.append(imageData)
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
                                                         storeCount += 1
                                                         if storeCount == self.selectedRestorationId.count {
                                                             NSNotificationCenter.defaultCenter().postNotificationName(kDidDoneSelectedAssetsNotification, object: results)
                                                         }
-                                                    }
                     })
-                    
-//                    manager.requestImageDataForAsset(asset,
-//                                                     options: option,
-//                                                     resultHandler: { (data: NSData?, _, _, _) in
-//                                                        if let data = data {
-//                                                            results.append(data)
-//                                                            storeCount += 1
-//                                                            if storeCount == self.selectedRestorationId.count {
-//                                                                NSNotificationCenter.defaultCenter().postNotificationName(kDidDoneSelectedAssetsNotification, object: results)
-//                                                            }
-//                                                        }
-//                    })
                 }
             }
         }
     }
     
-    /*
-     6218385
-     7580506
-     
-     1980798
-     */
+    func activityIndicator() -> UIActivityIndicatorView {
+        
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        indicator.startAnimating()
+        
+        return indicator
+    }
+    
     
 }
