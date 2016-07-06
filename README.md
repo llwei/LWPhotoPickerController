@@ -20,3 +20,5 @@ Deployment Target 8.0
         }
     }
 
+![(logo)](http://code4app.com/data/attachment/forum/201607/06/193806ce5wjpq5atzot7sq.png)
+![(logo)](http://code4app.com/data/attachment/forum/201607/06/194134anwzxsrhnsnu5ss6.png)
