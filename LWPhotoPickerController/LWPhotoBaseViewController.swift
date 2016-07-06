@@ -5,6 +5,7 @@
 //  Created by lailingwei on 16/6/15.
 //  Copyright © 2016年 lailingwei. All rights reserved.
 //
+//  https://github.com/llwei/LWPhotoPickerController
 
 import UIKit
 import Photos
