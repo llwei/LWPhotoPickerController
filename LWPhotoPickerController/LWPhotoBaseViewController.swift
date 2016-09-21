@@ -10,34 +10,34 @@
 import UIKit
 import Photos
 
-private let ScreenWidth = UIScreen.mainScreen().bounds.size.width
-private let ScreenHeight = UIScreen.mainScreen().bounds.size.height
+private let ScreenWidth = UIScreen.main.bounds.size.width
+private let ScreenHeight = UIScreen.main.bounds.size.height
 
 class LWPhotoBaseViewController: UIViewController {
 
     var maxSelectedCount: UInt = 1
-    var assetResult: PHFetchResult?
+    var assetResult: PHFetchResult<AnyObject>?
     var original: Bool = false
     var selectedRestorationId = [String]()
     var doneItem: UIBarButtonItem!
     
     func didClickDoneItemAction() {
-        guard let assetResult = assetResult where selectedRestorationId.count > 0 else { return }
+        guard let assetResult = assetResult , selectedRestorationId.count > 0 else { return }
         
-        var results = [NSData]()
+        var results = [Data]()
         var storeCount: Int = 0
         
         let option = PHImageRequestOptions()
-        option.synchronous = true
+        option.isSynchronous = true
 
         for i in 0..<assetResult.count {
             if let asset = assetResult[i] as? PHAsset {
                 if selectedRestorationId.contains(asset.localIdentifier) {
 
-                    let manager = PHImageManager.defaultManager()
-                    manager.requestImageDataForAsset(asset,
+                    let manager = PHImageManager.default()
+                    manager.requestImageData(for: asset,
                                                      options: option,
-                                                     resultHandler: { (data: NSData?, _, _, _) in
+                                                     resultHandler: { (data: Data?, _, _, _) in
                                                         
                                                         if let data = data {
                                                             if self.original {
@@ -52,7 +52,7 @@ class LWPhotoBaseViewController: UIViewController {
                                                         }
                                                         storeCount += 1
                                                         if storeCount == self.selectedRestorationId.count {
-                                                            NSNotificationCenter.defaultCenter().postNotificationName(kDidDoneSelectedAssetsNotification, object: results)
+                                                            NotificationCenter.default.post(name: Notification.Name(rawValue: kDidDoneSelectedAssetsNotification), object: results)
                                                         }
                     })
                 }
@@ -62,7 +62,7 @@ class LWPhotoBaseViewController: UIViewController {
     
     func activityIndicator() -> UIActivityIndicatorView {
         
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         indicator.startAnimating()
         
         return indicator

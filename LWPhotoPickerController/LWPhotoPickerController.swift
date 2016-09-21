@@ -18,7 +18,7 @@ let OriginalTitle = NSLocalizedString("原图", comment: "")
 let DoneTitle = NSLocalizedString("完成", comment: "")
 
 let kDidDoneSelectedAssetsNotification = "kDidDoneSelectedAssetsNotification"
-typealias DidDoneSelectedAssetHandler = ((imageDatas: [NSData]) -> Void)
+typealias DidDoneSelectedAssetHandler = ((_ imageDatas: [Data]) -> Void)
 private var PhotoPickerQueue = "PhotoPickerQueue"
 
 
@@ -26,36 +26,38 @@ class LWPhotoPickerController: NSObject {
     
     // MARK: - Properties
     
-    private var authorizd: Bool = true
-    private let queue: dispatch_queue_t = dispatch_queue_create(PhotoPickerQueue, DISPATCH_QUEUE_SERIAL)
-    private var didDoneHandler: DidDoneSelectedAssetHandler?
-    private var navigationController: UINavigationController?
+    fileprivate var authorizd: Bool = true
+    fileprivate let queue: DispatchQueue = DispatchQueue(label: PhotoPickerQueue, attributes: [])
+    fileprivate var didDoneHandler: DidDoneSelectedAssetHandler?
+    fileprivate var navigationController: UINavigationController?
     
     
     // MARK: - Life cycle
     
     override init() {
         super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(LWPhotoPickerController.doneSelectedAssetsNotification(_:)),
-                                                         name: kDidDoneSelectedAssetsNotification,
-                                                         object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(LWPhotoPickerController.doneSelectedAssetsNotification(_:)),
+                                               name: NSNotification.Name(rawValue: kDidDoneSelectedAssetsNotification),
+                                               object: nil)
     }
     
     
     // Check Photo authorization status
-    private func checkAuthorizationStatus() {
+    fileprivate func checkAuthorizationStatus() {
         
         switch PHPhotoLibrary.authorizationStatus() {
-        case .Authorized:
+        case .authorized:
             authorizd = true
-        case .NotDetermined:
-            dispatch_suspend(queue)
-            PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) in
-                if status != .Authorized {
+        case .notDetermined:
+            queue.suspend()
+            PHPhotoLibrary.requestAuthorization({
+                (status: PHAuthorizationStatus) in
+                
+                if status != .authorized {
                     self.authorizd = false
                 }
-                dispatch_resume(self.queue)
+                self.queue.resume()
             })
         default:
             authorizd = false
@@ -65,45 +67,44 @@ class LWPhotoPickerController: NSObject {
 
     
     // Show alert if authorization status is not .Authorized,
-    private func showAuthorizationAlert() {
+    fileprivate func showAuthorizationAlert() {
     
         let alertController = UIAlertController(title: AlertTitle,
                                                 message: AlertMessage,
-                                                preferredStyle: .Alert)
+                                                preferredStyle: .alert)
         let okAction = UIAlertAction(title: AlertOk,
-                                     style: .Cancel,
+                                     style: .cancel,
                                      handler: nil)
         let settingAction = UIAlertAction(title: AlertSetting,
-                                          style: .Default) { (_) in
-                                            
-                                            NSOperationQueue.mainQueue().addOperationWithBlock({ 
-                                                 UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+                                          style: .default) { (_) in
+                                            OperationQueue.main.addOperation({ 
+                                                 UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
                                             })
         }
         
         alertController.addAction(okAction)
         alertController.addAction(settingAction)
         
-        let rootVC = UIApplication.sharedApplication().keyWindow?.rootViewController
-        rootVC?.presentViewController(alertController, animated: true, completion: nil)
+        let rootVC = UIApplication.shared.keyWindow?.rootViewController
+        rootVC?.present(alertController, animated: true, completion: nil)
     }
     
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         print("LWPhotoPickerController deinit")
     }
     
     
     // MARK: - Notification
     
-    func doneSelectedAssetsNotification(notification: NSNotification) {
+    func doneSelectedAssetsNotification(_ notification: Notification) {
         
-        if let datas = notification.object as? [NSData] {
-            didDoneHandler?(imageDatas: datas)
+        if let datas = notification.object as? [Data] {
+            didDoneHandler?(datas)
         }
         
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
         navigationController = nil
     }
     
@@ -120,8 +121,8 @@ class LWPhotoPickerController: NSObject {
     
         checkAuthorizationStatus()
         
-        dispatch_async(queue) {
-            dispatch_async(dispatch_get_main_queue(), {
+        queue.async {
+            DispatchQueue.main.async(execute: {
                 guard self.authorizd else { return }
                 
                 // Initial root table view controller
@@ -130,8 +131,8 @@ class LWPhotoPickerController: NSObject {
                 
                 // Present vc
                 self.navigationController = UINavigationController(rootViewController: photoRootTVC)
-                if let rootVC = UIApplication.sharedApplication().keyWindow?.rootViewController {
-                    rootVC.presentViewController(self.navigationController!, animated: true, completion: nil)
+                if let rootVC = UIApplication.shared.keyWindow?.rootViewController {
+                    rootVC.present(self.navigationController!, animated: true, completion: nil)
                 }
             })
         }

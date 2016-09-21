@@ -20,7 +20,7 @@ class LWPhotoRootTableViewController: UITableViewController {
     // MARK: Properties
     
     var maxSelectedCount: UInt = 1
-    private var smartLibrarys = [[String : PHFetchResult]]()
+    fileprivate var smartLibrarys = [[String : PHFetchResult<AnyObject>]]()
     
     
     // MARK: - Life cycle
@@ -29,37 +29,37 @@ class LWPhotoRootTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Register table view cell
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: CellIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: CellIdentifier)
     
         setupNavigationBar()
         fetchAssetCollections()
     }
     
     
-    private func setupNavigationBar() {
+    fileprivate func setupNavigationBar() {
         // Add cancel item
-        let cancelItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                          target: self,
-                                         action: #selector(LWPhotoRootTableViewController.dismiss))
+                                         action: #selector(LWPhotoRootTableViewController.dismissSelf))
         navigationItem.leftBarButtonItem = cancelItem
-        navigationController?.navigationBar.tintColor = UIColor.darkGrayColor()
+        navigationController?.navigationBar.tintColor = UIColor.darkGray
     }
 
-    private func fetchAssetCollections() {
+    fileprivate func fetchAssetCollections() {
         
-        let smartAssetCollections = PHAssetCollection.fetchAssetCollectionsWithType(.SmartAlbum,
-                                                                                    subtype: .AlbumRegular,
-                                                                                    options: nil)
+        let smartAssetCollections = PHAssetCollection.fetchAssetCollections(with: .smartAlbum,
+                                                                            subtype: .albumRegular,
+                                                                            options: nil)
         for index in 0..<smartAssetCollections.count {
-            if let collection = smartAssetCollections[index] as? PHAssetCollection {
-                let fetchResult = PHAsset.fetchAssetsInAssetCollection(collection, options: nil)
-                if let asset = fetchResult.firstObject as? PHAsset {
-                    if asset.mediaType == .Image {
-                        let localizedTitle = (collection.localizedTitle ?? "") + "(" + "\(fetchResult.count)" + ")"
-                        smartLibrarys.append([localizedTitle : fetchResult])
-                    }
+            let collection = smartAssetCollections[index]
+            let fetchResult = PHAsset.fetchAssets(in: collection, options: nil)
+            if let asset = fetchResult.firstObject {
+                if asset.mediaType == .image {
+                    let localizedTitle = (collection.localizedTitle ?? "") + "(" + "\(fetchResult.count)" + ")"
+                    smartLibrarys.append([localizedTitle : fetchResult as! PHFetchResult<AnyObject>])
                 }
             }
+            
         }
     }
     
@@ -70,38 +70,37 @@ class LWPhotoRootTableViewController: UITableViewController {
     
     // MARK: - Target actions
     
-    func dismiss() {
-        NSNotificationCenter.defaultCenter().postNotificationName(kDidDoneSelectedAssetsNotification, object: nil)
+    func dismissSelf() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: kDidDoneSelectedAssetsNotification), object: nil)
     }
     
     
     // MARK: - Table view data source
 
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return smartLibrarys.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier, forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
         
-        cell.accessoryType = .DisclosureIndicator
+        cell.accessoryType = .disclosureIndicator
         
-        cell.textLabel?.text = smartLibrarys[indexPath.row].first?.0
-        if let asset = smartLibrarys[indexPath.row].first?.1.firstObject as? PHAsset {
-            let scale = UIScreen.mainScreen().scale
+        cell.textLabel?.text = smartLibrarys[(indexPath as NSIndexPath).row].first?.0
+        if let asset = smartLibrarys[(indexPath as NSIndexPath).row].first?.1.firstObject as? PHAsset {
+            let scale = UIScreen.main.scale
             let size = CGSize(width: CellHeight * scale, height: CellHeight * scale)
             
-            PHImageManager.defaultManager().requestImageForAsset(asset,
-                                                                 targetSize: size,
-                                                                 contentMode: .AspectFill,
-                                                                 options: nil,
-                                                                 resultHandler: {
-                                                                    (image: UIImage?, info: [NSObject : AnyObject]?) in
-                                                                    
-                                                                    cell.imageView?.image = image
-                                                                    cell.setNeedsLayout()
+            PHImageManager.default().requestImage(for: asset,
+                                                  targetSize: size,
+                                                  contentMode: .aspectFill,
+                                                  options: nil,
+                                                  resultHandler: {
+                                                    (image: UIImage?, info: [AnyHashable: Any]?) in
+                                                        cell.imageView?.image = image
+                                                        cell.setNeedsLayout()
             })
         }
         
@@ -110,27 +109,27 @@ class LWPhotoRootTableViewController: UITableViewController {
     }
     
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CellHeight
     }
     
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        showPhotoGridViewController(selectedIndex: indexPath.row)
+        showPhotoGridViewController(selectedIndex: (indexPath as NSIndexPath).row)
     }
     
     
     // MARK: - Helper methods
     
-    private func showPhotoGridViewController(selectedIndex index: Int) {
+    fileprivate func showPhotoGridViewController(selectedIndex index: Int) {
         
         let photoGridViewController = LWPhotoGridViewController()
         photoGridViewController.maxSelectedCount = maxSelectedCount
         photoGridViewController.title = smartLibrarys[index].first?.0
         photoGridViewController.assetResult = smartLibrarys[index].first!.1
-        navigationController?.showViewController(photoGridViewController, sender: self)
+        navigationController?.show(photoGridViewController, sender: self)
     }
     
     

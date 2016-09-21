@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
-    private lazy var photoPicker: LWPhotoPickerController = {
+    fileprivate lazy var photoPicker: LWPhotoPickerController = {
         return LWPhotoPickerController()
     }()
     
@@ -22,15 +22,15 @@ class ViewController: UIViewController {
     
     // MARK: - Target actions
     
-    @IBAction func showPhotoLibrary(sender: UIButton) {
+    @IBAction func showPhotoLibrary(_ sender: UIButton) {
         
         photoPicker.show(withMaxSelectedCount: 9) {
             [unowned self] (imageDatas) in
             
             print(imageDatas.count)
             if let data = imageDatas.first {
-                print(data.length)
-                self.imageView.image = UIImage(data: data)
+                print(data.count)
+                self.imageView.image = UIImage(data: data as Data)
             }
         }
 

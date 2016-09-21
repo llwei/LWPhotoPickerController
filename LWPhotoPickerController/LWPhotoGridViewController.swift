@@ -11,9 +11,9 @@ import UIKit
 import Photos
 
 private let CellIdentifier = "LWPhotoGridCell"
-private let Scale: CGFloat = UIScreen.mainScreen().scale
-private let ScreenWidth = UIScreen.mainScreen().bounds.size.width
-private let ScreenHeight = UIScreen.mainScreen().bounds.size.height
+private let Scale: CGFloat = UIScreen.main.scale
+private let ScreenWidth = UIScreen.main.bounds.size.width
+private let ScreenHeight = UIScreen.main.bounds.size.height
 
 private let HoriCount: Int = 4
 
@@ -23,12 +23,12 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
     
     // MARK: - Properties
     
-    private let imageManager = PHCachingImageManager()
-    private var originalItem: UIBarButtonItem!
-    private var collectionView: UICollectionView!
+    fileprivate let imageManager = PHCachingImageManager()
+    fileprivate var originalItem: UIBarButtonItem!
+    fileprivate var collectionView: UICollectionView!
     
    
-    private var previousPreheatRect = CGRectZero
+    fileprivate var previousPreheatRect = CGRect.zero
     
     
     // MARK: - Life cycle
@@ -51,16 +51,16 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
     
 
     
-    private func setuplNavigationBar() {
+    fileprivate func setuplNavigationBar() {
         // Add cancel item
-        let cancelItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                          target: self,
-                                         action: #selector(LWPhotoGridViewController.dismiss))
+                                         action: #selector(LWPhotoGridViewController.dismissSelf))
         navigationItem.rightBarButtonItem = cancelItem
     }
     
     
-    private func initialCollectionView() -> UICollectionView {
+    fileprivate func initialCollectionView() -> UICollectionView {
     
         // Flow layout
         let flowLayout = UICollectionViewFlowLayout()
@@ -68,79 +68,79 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
         flowLayout.itemSize = CGSize(width: size, height: size)
         flowLayout.minimumLineSpacing = 1.0
         flowLayout.minimumInteritemSpacing = 1.0
-        flowLayout.scrollDirection = .Vertical
+        flowLayout.scrollDirection = .vertical
         
         // UICollectionView
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
-        collectionView.backgroundColor = UIColor.whiteColor()
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = UIColor.white
         collectionView.dataSource = self
         collectionView.delegate = self
         
         // Register cell class
-        collectionView.registerClass(LWPhotoGridCell.self, forCellWithReuseIdentifier: CellIdentifier)
+        collectionView.register(LWPhotoGridCell.self, forCellWithReuseIdentifier: CellIdentifier)
         
         return collectionView
     }
     
     
-    private func initialToolBar() -> UIToolbar {
+    fileprivate func initialToolBar() -> UIToolbar {
     
         // Toolbar
-        let toolBar = UIToolbar(frame: CGRectZero)
-        toolBar.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        let toolBar = UIToolbar(frame: CGRect.zero)
+        toolBar.backgroundColor = UIColor.groupTableViewBackground
         
         // Original item
         let originalItem = UIBarButtonItem(title: OriginalTitle,
-                                           style: .Done,
+                                           style: .done,
                                            target: self,
                                            action: #selector(LWPhotoGridViewController.originalItemWasClick(_:)))
-        originalItem.tintColor = UIColor.lightGrayColor()
+        originalItem.tintColor = UIColor.lightGray
         self.originalItem = originalItem
         
         // Space item
-        let spaceItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace,
+        let spaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
                                         target: self,
                                         action: nil)
         // Done item
         let doneItem = UIBarButtonItem(title: DoneTitle,
-                                       style: .Done,
+                                       style: .done,
                                        target: self,
                                        action: #selector(LWPhotoGridViewController.didClickDoneItemAction))
         
-        doneItem.enabled = false
-        doneItem.tintColor = UIColor.orangeColor()
+        doneItem.isEnabled = false
+        doneItem.tintColor = UIColor.orange
         self.doneItem = doneItem
         toolBar.setItems([originalItem, spaceItem, doneItem], animated: true)
-        toolBar.tintColor = UIColor.darkGrayColor()
+        toolBar.tintColor = UIColor.darkGray
         
         return toolBar
     }
     
     
-    private func layout(withCollectionView collectionView: UICollectionView, toolBar: UIToolbar) {
+    fileprivate func layout(withCollectionView collectionView: UICollectionView, toolBar: UIToolbar) {
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         toolBar.translatesAutoresizingMaskIntoConstraints = false
         
-        let cHoriConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[collectionView]|",
-                                                                              options: .DirectionLeadingToTrailing,
+        let cHoriConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[collectionView]|",
+                                                                              options: NSLayoutFormatOptions(),
                                                                               metrics: nil,
                                                                               views: ["collectionView" : collectionView])
-        let tHoriConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[toolBar]|",
-                                                                              options: .DirectionLeadingToTrailing,
+        let tHoriConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[toolBar]|",
+                                                                              options: NSLayoutFormatOptions(),
                                                                               metrics: nil,
                                                                               views: ["toolBar" : toolBar])
-        let vertConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[collectionView][toolBar(==44)]|",
-                                                                             options: .DirectionLeadingToTrailing,
+        let vertConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[collectionView][toolBar(==44)]|",
+                                                                             options: NSLayoutFormatOptions(),
                                                                              metrics: ["44" : 44],
                                                                              views: ["toolBar" : toolBar, "collectionView" : collectionView])
         
-        NSLayoutConstraint.activateConstraints(cHoriConstraints)
-        NSLayoutConstraint.activateConstraints(tHoriConstraints)
-        NSLayoutConstraint.activateConstraints(vertConstraints)
+        NSLayoutConstraint.activate(cHoriConstraints)
+        NSLayoutConstraint.activate(tHoriConstraints)
+        NSLayoutConstraint.activate(vertConstraints)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // Begin caching assets in and around collection view's visible rect.
@@ -154,18 +154,18 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
     
     // MARK: - Target actions
     
-    func dismiss() {
-        NSNotificationCenter.defaultCenter().postNotificationName(kDidDoneSelectedAssetsNotification, object: nil)
+    func dismissSelf() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: kDidDoneSelectedAssetsNotification), object: nil)
     }
     
     
-    func originalItemWasClick(sender: UIBarButtonItem) {
+    func originalItemWasClick(_ sender: UIBarButtonItem) {
         
         original = !original
         if original {
-            sender.tintColor = UIColor.orangeColor()
+            sender.tintColor = UIColor.orange
         } else {
-            sender.tintColor = UIColor.lightGrayColor()
+            sender.tintColor = UIColor.lightGray
         }
     }
     
@@ -173,52 +173,52 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
     
     
     func didClickPhotoGridCell(selectedButton button: UIButton, representedAssetIdentfier identifier: String?) {
-        guard let identifier = identifier where selectedRestorationId.count < Int(maxSelectedCount) || button.selected else { return }
+        guard let identifier = identifier , selectedRestorationId.count < Int(maxSelectedCount) || button.isSelected else { return }
         
-        button.selected = !button.selected
+        button.isSelected = !button.isSelected
         
         // Update selectedRestorationId
-        if button.selected {
+        if button.isSelected {
             selectedRestorationId.append(identifier)
         } else {
             selectedRestorationId = selectedRestorationId.filter( { $0 != identifier} )
         }
         
         // Update doneItem
-        doneItem.enabled = selectedRestorationId.count > 0
-        doneItem.title = DoneTitle + (doneItem.enabled ? "(" + "\(selectedRestorationId.count)" + ")" : "")
+        doneItem.isEnabled = selectedRestorationId.count > 0
+        doneItem.title = DoneTitle + (doneItem.isEnabled ? "(" + "\(selectedRestorationId.count)" + ")" : "")
     }
 
     
     
     // MARK: - Helper methods
     
-    private func updateCachedAssets() {
-        guard isViewLoaded() && view.window != nil else { return }
+    fileprivate func updateCachedAssets() {
+        guard isViewLoaded && view.window != nil else { return }
         
         // The preheat window is twice the height of the visible rect
         var preheatRect = collectionView.bounds
-        preheatRect = CGRectInset(preheatRect, 0.0, -0.5 * CGRectGetHeight(preheatRect))
+        preheatRect = preheatRect.insetBy(dx: 0.0, dy: -0.5 * preheatRect.height)
         
         // Check if the collection view is showing an area that is significantly different to the last preheated area
-        let delta = abs(Int32(CGRectGetMidY(preheatRect)) - Int32(CGRectGetMidY(previousPreheatRect)))
-        if delta > Int32(CGRectGetHeight(collectionView.bounds) / 3) {
+        let delta = abs(Int32(preheatRect.midY) - Int32(previousPreheatRect.midY))
+        if delta > Int32(collectionView.bounds.height / 3) {
             // Compute the assets to start caching and to stop caching.
-            var addedIndexPaths = [NSIndexPath]()
-            var removedIndexPaths = [NSIndexPath]()
+            var addedIndexPaths = [IndexPath]()
+            var removedIndexPaths = [IndexPath]()
             
             computeDifferenceBetweenRect(previousPreheatRect,
                                          andRect: preheatRect,
                                          removedHandler: { [unowned self] (removedRect) in
                                             
                                             if let indexPaths = self.collectionView.lw_indexPathsForElementsInRect(removedRect) {
-                                                removedIndexPaths.appendContentsOf(indexPaths)
+                                                removedIndexPaths.append(contentsOf: indexPaths)
                                             }
                                             
                 }, addedHandler: { [unowned self] (addedRect) in
                     
                     if let indexPaths = self.collectionView.lw_indexPathsForElementsInRect(addedRect) {
-                        addedIndexPaths.appendContentsOf(indexPaths)
+                        addedIndexPaths.append(contentsOf: indexPaths)
                     }
             })
             
@@ -227,15 +227,15 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
             let size = CGSize(width: layoutSize.width * Scale, height: layoutSize.height * Scale)
             
             if let assetsToStartCaching = assetsAtIndexPaths(addedIndexPaths) {
-                imageManager.startCachingImagesForAssets(assetsToStartCaching,
+                imageManager.startCachingImages(for: assetsToStartCaching,
                                                          targetSize: size,
-                                                         contentMode: .AspectFill,
+                                                         contentMode: .aspectFill,
                                                          options: nil)
             }
             if let assetsToStopCaching = assetsAtIndexPaths(removedIndexPaths) {
-                imageManager.stopCachingImagesForAssets(assetsToStopCaching,
+                imageManager.stopCachingImages(for: assetsToStopCaching,
                                                         targetSize: size,
-                                                        contentMode: .AspectFill,
+                                                        contentMode: .aspectFill,
                                                         options: nil)
             }
             
@@ -244,50 +244,50 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
         }
     }
     
-    private func computeDifferenceBetweenRect(oldRect: CGRect,
+    fileprivate func computeDifferenceBetweenRect(_ oldRect: CGRect,
                                               andRect newRect: CGRect,
-                                                      removedHandler: ((removedRect: CGRect) -> Void)?,
-                                                      addedHandler: ((addedRect: CGRect) -> Void)?) {
+                                                      removedHandler: ((_ removedRect: CGRect) -> Void)?,
+                                                      addedHandler: ((_ addedRect: CGRect) -> Void)?) {
         
-        if CGRectIntersectsRect(newRect, oldRect) {
-            let oldMaxY = CGRectGetMaxY(oldRect)
-            let oldMinY = CGRectGetMinX(oldRect)
-            let newMaxY = CGRectGetMaxY(newRect)
-            let newMinY = CGRectGetMinX(newRect)
+        if newRect.intersects(oldRect) {
+            let oldMaxY = oldRect.maxY
+            let oldMinY = oldRect.minX
+            let newMaxY = newRect.maxY
+            let newMinY = newRect.minX
             
             if newMaxY > oldMaxY {
                 let rectToAdd = CGRect(x: newRect.origin.x, y: oldMinY, width: newRect.size.width, height: newMaxY - oldMinY)
-                addedHandler?(addedRect: rectToAdd)
+                addedHandler?(rectToAdd)
             }
             
             if newMinY > oldMinY  {
                 let rectToRemove = CGRect(x: newRect.origin.x, y: oldMinY, width: newRect.size.width, height: newMinY - oldMinY)
-                removedHandler?(removedRect: rectToRemove)
+                removedHandler?(rectToRemove)
             }
             
             if newMaxY < oldMaxY {
                 let rectToRemove = CGRect(x: newRect.origin.x, y: newMaxY, width: newRect.size.width, height: oldMaxY - newMaxY)
-                removedHandler?(removedRect: rectToRemove)
+                removedHandler?(rectToRemove)
             }
             
             if newMinY < oldMinY {
                 let rectToAdd = CGRect(x: newRect.origin.x, y: newMinY, width: newRect.size.width, height: oldMinY - newMinY)
-                addedHandler?(addedRect: rectToAdd)
+                addedHandler?(rectToAdd)
             }
             
         } else {
-            addedHandler?(addedRect: newRect)
-            removedHandler?(removedRect: oldRect)
+            addedHandler?(newRect)
+            removedHandler?(oldRect)
         }
     }
     
     
-    private func assetsAtIndexPaths(indexPaths: [NSIndexPath]) -> [PHAsset]? {
+    fileprivate func assetsAtIndexPaths(_ indexPaths: [IndexPath]) -> [PHAsset]? {
         guard indexPaths.count > 0 else { return nil }
         
         var assets = [PHAsset]()
         for indexPath in indexPaths {
-            if let asset = assetResult?[indexPath.item] as? PHAsset {
+            if let asset = assetResult?[(indexPath as NSIndexPath).item] as? PHAsset {
                 assets.append(asset)
             }
         }
@@ -295,7 +295,7 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
         return assets
     }
     
-    private func updateOriginalTitle() {
+    fileprivate func updateOriginalTitle() {
         
     }
     
@@ -303,29 +303,29 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
     
     // MARK: - UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return assetResult?.count ?? 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! LWPhotoGridCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier, for: indexPath) as! LWPhotoGridCell
         
         cell.delegate = self
         
-        if let asset = assetResult?[indexPath.row] as? PHAsset {
+        if let asset = assetResult?[(indexPath as NSIndexPath).row] as? PHAsset {
             cell.restorationIdentifier = asset.localIdentifier
             cell.didSelected = selectedRestorationId.contains(asset.localIdentifier)
             
             let layoutSize = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
             let size = CGSize(width: layoutSize.width * Scale, height: layoutSize.height * Scale)
             
-            imageManager.requestImageForAsset(asset,
+            imageManager.requestImage(for: asset,
                                               targetSize: size,
-                                              contentMode: .AspectFill,
+                                              contentMode: .aspectFill,
                                               options: nil,
                                               resultHandler: {
-                                                (image: UIImage?, info: [NSObject : AnyObject]?) in
+                                                (image: UIImage?, info: [AnyHashable: Any]?) in
                                                 
                                                 if cell.restorationIdentifier == asset.localIdentifier {
                                                     cell.thumbnailImage = image
@@ -338,15 +338,15 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
     }
 
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let photoBrowseVC = LWPhotoBrowseViewController()
         photoBrowseVC.maxSelectedCount = maxSelectedCount
         photoBrowseVC.assetResult = assetResult
-        photoBrowseVC.currentIndex = indexPath.item
+        photoBrowseVC.currentIndex = (indexPath as NSIndexPath).item
         photoBrowseVC.selectedRestorationId = selectedRestorationId
         photoBrowseVC.original = original
-        showViewController(photoBrowseVC, sender: self)
+        show(photoBrowseVC, sender: self)
         
         photoBrowseVC.updateSelectedMarkHandler { (add, restorationId, indexPath) in
             // Update selectedRestorationId
@@ -355,15 +355,15 @@ class LWPhotoGridViewController: LWPhotoBaseViewController, UICollectionViewData
             } else {
                 self.selectedRestorationId = self.selectedRestorationId.filter( { $0 != restorationId} )
             }
-            self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            self.collectionView.reloadItems(at: [indexPath as IndexPath])
             
             // Update doneItem
-            self.doneItem.enabled = self.selectedRestorationId.count > 0
-            self.doneItem.title = DoneTitle + (self.doneItem.enabled ? "(" + "\(self.selectedRestorationId.count)" + ")" : "")
+            self.doneItem.isEnabled = self.selectedRestorationId.count > 0
+            self.doneItem.title = DoneTitle + (self.doneItem.isEnabled ? "(" + "\(self.selectedRestorationId.count)" + ")" : "")
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateCachedAssets()
     }
     
@@ -380,8 +380,8 @@ class LWPhotoGridCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    private let imageView = UIImageView()
-    private let selectedButton = UIButton(type: .Custom)
+    fileprivate let imageView = UIImageView()
+    fileprivate let selectedButton = UIButton(type: .custom)
 
     weak var delegate: LWPhotoGridCellDelegate?
     var representedAssetIdentifier: String?
@@ -392,7 +392,7 @@ class LWPhotoGridCell: UICollectionViewCell {
     }
     var didSelected: Bool = false {
         didSet {
-            selectedButton.selected = didSelected
+            selectedButton.isSelected = didSelected
         }
     }
     
@@ -410,75 +410,75 @@ class LWPhotoGridCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
     
         // Image view
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         
         // Selected button
-        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-0"), forState: .Normal)
-        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-1"), forState: .Selected)
+        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-0"), for: UIControlState())
+        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-1"), for: .selected)
         selectedButton.addTarget(self,
                                  action: #selector(LWPhotoGridCell.didClickSelectedButton(_:)),
-                                 forControlEvents: .TouchUpInside)
+                                 for: .touchUpInside)
         contentView.addSubview(selectedButton)
         
         addConstranints()
     }
     
-    private func addConstranints() {
+    fileprivate func addConstranints() {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.translatesAutoresizingMaskIntoConstraints = false
         
-        let imgViewHs = NSLayoutConstraint.constraintsWithVisualFormat("H:|[imageView]|",
-                                                                       options: .DirectionLeadingToTrailing,
+        let imgViewHs = NSLayoutConstraint.constraints(withVisualFormat: "H:|[imageView]|",
+                                                                       options: NSLayoutFormatOptions(),
                                                                        metrics: nil,
                                                                        views: ["imageView" : imageView])
-        let imgViewVs = NSLayoutConstraint.constraintsWithVisualFormat("V:|[imageView]|",
-                                                                       options: .DirectionLeadingToTrailing,
+        let imgViewVs = NSLayoutConstraint.constraints(withVisualFormat: "V:|[imageView]|",
+                                                                       options: NSLayoutFormatOptions(),
                                                                        metrics: nil,
                                                                        views: ["imageView" : imageView])
         let btnWith = NSLayoutConstraint(item: selectedButton,
-                                         attribute: .Width,
-                                         relatedBy: .Equal,
+                                         attribute: .width,
+                                         relatedBy: .equal,
                                          toItem: imageView,
-                                         attribute: .Width,
+                                         attribute: .width,
                                          multiplier: 0.3,
                                          constant: 0.0)
         let btnHeight = NSLayoutConstraint(item: selectedButton,
-                                           attribute: .Height,
-                                           relatedBy: .Equal,
+                                           attribute: .height,
+                                           relatedBy: .equal,
                                            toItem: imageView,
-                                           attribute: .Height,
+                                           attribute: .height,
                                            multiplier: 0.3,
                                            constant: 0.0)
         let btnTop = NSLayoutConstraint(item: selectedButton,
-                                        attribute: .Top,
-                                        relatedBy: .Equal,
+                                        attribute: .top,
+                                        relatedBy: .equal,
                                         toItem: imageView,
-                                        attribute: .Top,
+                                        attribute: .top,
                                         multiplier: 1.0,
                                         constant: 0.0)
         let btnRight = NSLayoutConstraint(item: selectedButton,
-                                          attribute: .Right,
-                                          relatedBy: .Equal,
+                                          attribute: .right,
+                                          relatedBy: .equal,
                                           toItem: imageView,
-                                          attribute: .Right,
+                                          attribute: .right,
                                           multiplier: 1.0,
                                           constant: 0.0)
         
-        NSLayoutConstraint.activateConstraints(imgViewHs)
-        NSLayoutConstraint.activateConstraints(imgViewVs)
-        NSLayoutConstraint.activateConstraints([btnHeight, btnWith, btnTop, btnRight])
+        NSLayoutConstraint.activate(imgViewHs)
+        NSLayoutConstraint.activate(imgViewVs)
+        NSLayoutConstraint.activate([btnHeight, btnWith, btnTop, btnRight])
     }
     
     
     // MARK: - Target actions
     
-    func didClickSelectedButton(sender: UIButton) {
+    func didClickSelectedButton(_ sender: UIButton) {
         delegate?.didClickPhotoGridCell(selectedButton: sender, representedAssetIdentfier: restorationIdentifier)
     }
     
@@ -486,10 +486,10 @@ class LWPhotoGridCell: UICollectionViewCell {
 
 extension UICollectionView {
     
-    func lw_indexPathsForElementsInRect(rect: CGRect) -> [NSIndexPath]? {
-        guard let allLayoutAttributes = collectionViewLayout.layoutAttributesForElementsInRect(rect) where allLayoutAttributes.count > 0 else { return nil }
+    func lw_indexPathsForElementsInRect(_ rect: CGRect) -> [IndexPath]? {
+        guard let allLayoutAttributes = collectionViewLayout.layoutAttributesForElements(in: rect) , allLayoutAttributes.count > 0 else { return nil }
         
-        var indexPaths = [NSIndexPath]()
+        var indexPaths = [IndexPath]()
         for layoutAttributes in allLayoutAttributes {
             let indexPath = layoutAttributes.indexPath
             indexPaths.append(indexPath)

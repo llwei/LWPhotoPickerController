@@ -11,13 +11,13 @@ import UIKit
 import Photos
 
 private let CellIdentifier = "LWPhotoBrowseCell"
-private let Scale: CGFloat = UIScreen.mainScreen().scale
-private let ScreenWidth = UIScreen.mainScreen().bounds.size.width
-private let ScreenHeight = UIScreen.mainScreen().bounds.size.height
+private let Scale: CGFloat = UIScreen.main.scale
+private let ScreenWidth = UIScreen.main.bounds.size.width
+private let ScreenHeight = UIScreen.main.bounds.size.height
 
 private let SelectedBtnSize: CGFloat = 40.0
 
-typealias UpdateSelectedHandler = ((add: Bool, restorationId: String, indexPath: NSIndexPath) -> Void)
+typealias UpdateSelectedHandler = ((_ add: Bool, _ restorationId: String, _ indexPath: IndexPath) -> Void)
 
 class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
@@ -25,9 +25,9 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     
     var currentIndex: Int!
     
-    private var collectionView: UICollectionView!
-    private var selectedButton: UIButton!
-    private var updateSelectedHandler: UpdateSelectedHandler?
+    fileprivate var collectionView: UICollectionView!
+    fileprivate var selectedButton: UIButton!
+    fileprivate var updateSelectedHandler: UpdateSelectedHandler?
     
     
     // MARK: - Life cycle
@@ -52,63 +52,63 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
         updateTitleAndSelectedButton(withCurrentIndex: currentIndex)
     }
 
-    private func initialRightDoneItem() -> UIBarButtonItem {
+    fileprivate func initialRightDoneItem() -> UIBarButtonItem {
         // Done item
         let enabled = selectedRestorationId.count > 0
         let itemTitle = DoneTitle + (enabled ? "(" + "\(selectedRestorationId.count)" + ")" : "")
         
         let doneItem = UIBarButtonItem(title: itemTitle,
-                                       style: .Done,
+                                       style: .done,
                                        target: self,
                                        action: #selector(LWPhotoBrowseViewController.didClickDoneItemAction))
-        doneItem.enabled = enabled
-        doneItem.tintColor = UIColor.orangeColor()
+        doneItem.isEnabled = enabled
+        doneItem.tintColor = UIColor.orange
         
         return doneItem
     }
     
     
-    private func initialCollectionView() -> UICollectionView {
+    fileprivate func initialCollectionView() -> UICollectionView {
         // Flow layout
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: ScreenWidth, height: ScreenHeight - 64)
         flowLayout.minimumLineSpacing = 0.0
         flowLayout.minimumInteritemSpacing = 0.0
-        flowLayout.scrollDirection = .Horizontal
+        flowLayout.scrollDirection = .horizontal
         
         // UICollection view
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
-        collectionView.pagingEnabled = true
-        collectionView.backgroundColor = UIColor.blackColor()
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        collectionView.isPagingEnabled = true
+        collectionView.backgroundColor = UIColor.black
         collectionView.dataSource = self
         collectionView.delegate = self
         
         // Register cell class
-        collectionView.registerClass(LWPhotoBrowseCell.self, forCellWithReuseIdentifier: CellIdentifier)
+        collectionView.register(LWPhotoBrowseCell.self, forCellWithReuseIdentifier: CellIdentifier)
         
         return collectionView
     }
     
-    private func initialSelectedButton() -> UIButton {
+    fileprivate func initialSelectedButton() -> UIButton {
         
-        let selectedButton = UIButton(type: .Custom)
-        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-0"), forState: .Normal)
-        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-1"), forState: .Selected)
+        let selectedButton = UIButton(type: .custom)
+        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-0"), for: UIControlState())
+        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-1"), for: .selected)
         selectedButton.addTarget(self,
                                  action: #selector(LWPhotoBrowseViewController.didClickSelectedButton(_:)),
-                                 forControlEvents: .TouchUpInside)
+                                 for: .touchUpInside)
         
         return selectedButton
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Scroll to current index
-        let indexPath = NSIndexPath(forItem: currentIndex, inSection: 0)
-        let after = dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_SEC) / 20)
-        dispatch_after(after, dispatch_get_main_queue()) { 
-            self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .None, animated: false)
+        let indexPath = IndexPath(item: currentIndex, section: 0)
+        let after = DispatchTime.now() + Double(Int64(NSEC_PER_SEC) / 20) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: after) { 
+            self.collectionView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition(), animated: false)
         }
         
     }
@@ -116,7 +116,7 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let statusBarHidden = UIApplication.sharedApplication().statusBarHidden
+        let statusBarHidden = UIApplication.shared.isStatusBarHidden
         let navigationBarHeight = navigationController?.navigationBar.bounds.size.height ?? 44.0
         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.itemSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height - navigationBarHeight - (statusBarHidden ? 0 : 20))
@@ -131,57 +131,57 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     
     // MARK: - Helper methods
     
-    private func layoutCollectionView(collectionView: UICollectionView, selectedButton: UIButton) {
+    fileprivate func layoutCollectionView(_ collectionView: UICollectionView, selectedButton: UIButton) {
         
         // CollectionView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let horiConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[collectionView]|",
-                                                                             options: .DirectionLeadingToTrailing,
+        let horiConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[collectionView]|",
+                                                                             options: NSLayoutFormatOptions(),
                                                                              metrics: nil,
                                                                              views: ["collectionView" : collectionView])
-        let vertiConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[collectionView]|",
-                                                                              options: .DirectionLeadingToTrailing,
+        let vertiConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[collectionView]|",
+                                                                              options: NSLayoutFormatOptions(),
                                                                               metrics: nil,
                                                                               views: ["collectionView" : collectionView])
-        NSLayoutConstraint.activateConstraints(horiConstraints)
-        NSLayoutConstraint.activateConstraints(vertiConstraints)
+        NSLayoutConstraint.activate(horiConstraints)
+        NSLayoutConstraint.activate(vertiConstraints)
         
         // SelectedButton
         selectedButton.translatesAutoresizingMaskIntoConstraints = false
         let buttonWidth = NSLayoutConstraint(item: selectedButton,
-                                             attribute: .Width,
-                                             relatedBy: .Equal,
+                                             attribute: .width,
+                                             relatedBy: .equal,
                                              toItem: nil,
-                                             attribute: .NotAnAttribute,
+                                             attribute: .notAnAttribute,
                                              multiplier: 1.0,
                                              constant: SelectedBtnSize)
         let buttonHeight = NSLayoutConstraint(item: selectedButton,
-                                              attribute: .Height,
-                                              relatedBy: .Equal,
+                                              attribute: .height,
+                                              relatedBy: .equal,
                                               toItem: nil,
-                                              attribute: .NotAnAttribute,
+                                              attribute: .notAnAttribute,
                                               multiplier: 1.0,
                                               constant: SelectedBtnSize)
         let buttonTop = NSLayoutConstraint(item: selectedButton,
-                                           attribute: .Top,
-                                           relatedBy: .Equal,
+                                           attribute: .top,
+                                           relatedBy: .equal,
                                            toItem: view,
-                                           attribute: .Top,
+                                           attribute: .top,
                                            multiplier: 1.0,
                                            constant: SelectedBtnSize / 4 + 64)
         let buttonRight = NSLayoutConstraint(item: selectedButton,
-                                             attribute: .Right,
-                                             relatedBy: .Equal,
+                                             attribute: .right,
+                                             relatedBy: .equal,
                                              toItem: view,
-                                             attribute: .Right,
+                                             attribute: .right,
                                              multiplier: 1.0,
                                              constant: -SelectedBtnSize / 4)
         
-        NSLayoutConstraint.activateConstraints([buttonWidth, buttonHeight, buttonTop, buttonRight])
+        NSLayoutConstraint.activate([buttonWidth, buttonHeight, buttonTop, buttonRight])
     }
     
     
-    private func updateTitleAndSelectedButton(withCurrentIndex page: Int) {
+    fileprivate func updateTitleAndSelectedButton(withCurrentIndex page: Int) {
     
         // Update title
         currentIndex = page
@@ -189,7 +189,7 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
         
         // Update selected button
         if let asset = assetResult?[page] as? PHAsset {
-            selectedButton.selected = selectedRestorationId.contains(asset.localIdentifier)
+            selectedButton.isSelected = selectedRestorationId.contains(asset.localIdentifier)
         }
     }
     
@@ -197,60 +197,60 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     
     // MARK: - Target actions
     
-    func didClickSelectedButton(sender: UIButton) {
-        guard selectedRestorationId.count < Int(maxSelectedCount) || sender.selected else { return }
+    func didClickSelectedButton(_ sender: UIButton) {
+        guard selectedRestorationId.count < Int(maxSelectedCount) || sender.isSelected else { return }
         
-        sender.selected = !sender.selected
+        sender.isSelected = !sender.isSelected
         
         // Update selectedRestorationId
         let page = Int(collectionView.contentOffset.x / ScreenWidth)
-        let indexPath = NSIndexPath(forItem: page, inSection: 0)
+        let indexPath = IndexPath(item: page, section: 0)
         if let asset = assetResult?[page] as? PHAsset {
-            if sender.selected {
+            if sender.isSelected {
                 selectedRestorationId.append(asset.localIdentifier)
-                updateSelectedHandler?(add: true, restorationId: asset.localIdentifier, indexPath: indexPath)
+                updateSelectedHandler?(true, asset.localIdentifier, indexPath)
             } else {
                 selectedRestorationId = selectedRestorationId.filter( {$0 != asset.localIdentifier} )
-                updateSelectedHandler?(add: false, restorationId: asset.localIdentifier, indexPath: indexPath)
+                updateSelectedHandler?(false, asset.localIdentifier, indexPath)
             }
         }
         
         // Update doneItem
-        doneItem.enabled = selectedRestorationId.count > 0
-        doneItem.title = DoneTitle + (doneItem.enabled ? "(" + "\(selectedRestorationId.count)" + ")" : "")
+        doneItem.isEnabled = selectedRestorationId.count > 0
+        doneItem.title = DoneTitle + (doneItem.isEnabled ? "(" + "\(selectedRestorationId.count)" + ")" : "")
     }
     
     
     
     // MARK: - Public methods
     
-    func updateSelectedMarkHandler(handler: UpdateSelectedHandler?) {
+    func updateSelectedMarkHandler(_ handler: UpdateSelectedHandler?) {
         updateSelectedHandler = handler
     }
     
     
     // MARK: - UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return assetResult?.count ?? 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CellIdentifier, forIndexPath: indexPath) as! LWPhotoBrowseCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellIdentifier, for: indexPath) as! LWPhotoBrowseCell
         
-        if let asset = assetResult?[indexPath.item] as? PHAsset {
+        if let asset = assetResult?[(indexPath as NSIndexPath).item] as? PHAsset {
             cell.representedAssetIdentifier = asset.localIdentifier
             
             let option = PHImageRequestOptions()
-            option.synchronous = false          // 如果为true，则下面的handler只调用一次，false会调用多出（第一次会比较模糊）
+            option.isSynchronous = false          // 如果为true，则下面的handler只调用一次，false会调用多出（第一次会比较模糊）
             
             let size = CGSize(width: CGFloat(asset.pixelWidth), height: CGFloat(asset.pixelHeight))
-            PHImageManager.defaultManager().requestImageForAsset(asset,
+            PHImageManager.default().requestImage(for: asset,
                                                                  targetSize: size,
-                                                                 contentMode: .AspectFit,
+                                                                 contentMode: .aspectFit,
                                                                  options: option,
-                                                                 resultHandler: { (image: UIImage?, info: [NSObject : AnyObject]?) in
+                                                                 resultHandler: { (image: UIImage?, info: [AnyHashable: Any]?) in
                                                                     
                                                                     if cell.representedAssetIdentifier == asset.localIdentifier {
                                                                         cell.image = image
@@ -263,7 +263,7 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     }
 
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         let page = Int(scrollView.contentOffset.x / ScreenWidth)
         updateTitleAndSelectedButton(withCurrentIndex: page)
@@ -284,9 +284,9 @@ class LWPhotoBrowseCell: UICollectionViewCell, UIScrollViewDelegate {
         }
     }
     
-    private lazy var imageView: UIImageView = {
+    fileprivate lazy var imageView: UIImageView = {
         let lazyImageView = UIImageView()
-        lazyImageView.contentMode = .ScaleAspectFit
+        lazyImageView.contentMode = .scaleAspectFit
         return lazyImageView
     }()
 
@@ -305,20 +305,20 @@ class LWPhotoBrowseCell: UICollectionViewCell, UIScrollViewDelegate {
     }
     
  
-    private func addConstranints() {
+    fileprivate func addConstranints() {
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let imgViewHs = NSLayoutConstraint.constraintsWithVisualFormat("H:|[imageView]|",
-                                                                       options: .DirectionLeadingToTrailing,
+        let imgViewHs = NSLayoutConstraint.constraints(withVisualFormat: "H:|[imageView]|",
+                                                                       options: NSLayoutFormatOptions(),
                                                                        metrics: nil,
                                                                        views: ["imageView" : imageView])
-        let imgViewVs = NSLayoutConstraint.constraintsWithVisualFormat("V:|[imageView]|",
-                                                                       options: .DirectionLeadingToTrailing,
+        let imgViewVs = NSLayoutConstraint.constraints(withVisualFormat: "V:|[imageView]|",
+                                                                       options: NSLayoutFormatOptions(),
                                                                        metrics: nil,
                                                                        views: ["imageView" : imageView])
         
-        NSLayoutConstraint.activateConstraints(imgViewHs)
-        NSLayoutConstraint.activateConstraints(imgViewVs)
+        NSLayoutConstraint.activate(imgViewHs)
+        NSLayoutConstraint.activate(imgViewVs)
     }
     
     
