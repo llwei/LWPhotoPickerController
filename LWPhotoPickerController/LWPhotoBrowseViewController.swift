@@ -92,8 +92,8 @@ class LWPhotoBrowseViewController: LWPhotoBaseViewController, UICollectionViewDa
     fileprivate func initialSelectedButton() -> UIButton {
         
         let selectedButton = UIButton(type: .custom)
-        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-0"), for: UIControlState())
-        selectedButton.setBackgroundImage(UIImage(named: "AGIPC-Checkmark-1"), for: .selected)
+        selectedButton.setBackgroundImage(UIImage(named: "LWPhotoPickerController.bundle/Resources/AGIPC-Checkmark-0.png"), for: UIControlState())
+        selectedButton.setBackgroundImage(UIImage(named: "LWPhotoPickerController.bundle/Resources/AGIPC-Checkmark-1.png"), for: .selected)
         selectedButton.addTarget(self,
                                  action: #selector(LWPhotoBrowseViewController.didClickSelectedButton(_:)),
                                  for: .touchUpInside)

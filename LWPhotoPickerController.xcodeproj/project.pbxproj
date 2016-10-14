@@ -15,10 +15,7 @@
 		0047BC211D0EA1EC007A934F /* LWPhotoRootTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0047BC201D0EA1EC007A934F /* LWPhotoRootTableViewController.swift */; };
 		0047BC231D0EA231007A934F /* LWPhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0047BC221D0EA231007A934F /* LWPhotoPickerController.swift */; };
 		006A6A121D0FBAAF00861696 /* LWPhotoGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006A6A111D0FBAAF00861696 /* LWPhotoGridViewController.swift */; };
-		006A6A171D0FC00E00861696 /* AGIPC-Checkmark-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A131D0FC00E00861696 /* AGIPC-Checkmark-0.png */; };
-		006A6A181D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A141D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png */; };
-		006A6A191D0FC00E00861696 /* AGIPC-Checkmark-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A151D0FC00E00861696 /* AGIPC-Checkmark-1.png */; };
-		006A6A1A1D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 006A6A161D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png */; };
+		0071C6BF1DB08881008C61B3 /* LWPhotoPickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0071C6BE1DB08881008C61B3 /* LWPhotoPickerController.bundle */; };
 		00C19DCC1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C19DCB1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift */; };
 		00F178C01D11646700503A48 /* LWPhotoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F178BF1D11646700503A48 /* LWPhotoBaseViewController.swift */; };
 /* End PBXBuildFile section */
@@ -34,10 +31,7 @@
 		0047BC201D0EA1EC007A934F /* LWPhotoRootTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoRootTableViewController.swift; sourceTree = "<group>"; };
 		0047BC221D0EA231007A934F /* LWPhotoPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoPickerController.swift; sourceTree = "<group>"; };
 		006A6A111D0FBAAF00861696 /* LWPhotoGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoGridViewController.swift; sourceTree = "<group>"; };
-		006A6A131D0FC00E00861696 /* AGIPC-Checkmark-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-0.png"; sourceTree = "<group>"; };
-		006A6A141D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-0@2x.png"; sourceTree = "<group>"; };
-		006A6A151D0FC00E00861696 /* AGIPC-Checkmark-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-1.png"; sourceTree = "<group>"; };
-		006A6A161D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AGIPC-Checkmark-1@2x.png"; sourceTree = "<group>"; };
+		0071C6BE1DB08881008C61B3 /* LWPhotoPickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LWPhotoPickerController.bundle; sourceTree = "<group>"; };
 		00C19DCB1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoBrowseViewController.swift; sourceTree = "<group>"; };
 		00F178BF1D11646700503A48 /* LWPhotoBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWPhotoBaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,25 +80,14 @@
 		0047BC1F1D0EA1CE007A934F /* Claass */ = {
 			isa = PBXGroup;
 			children = (
+				0071C6BE1DB08881008C61B3 /* LWPhotoPickerController.bundle */,
 				0047BC221D0EA231007A934F /* LWPhotoPickerController.swift */,
 				0047BC201D0EA1EC007A934F /* LWPhotoRootTableViewController.swift */,
 				006A6A111D0FBAAF00861696 /* LWPhotoGridViewController.swift */,
 				00C19DCB1D0FF028004A8B27 /* LWPhotoBrowseViewController.swift */,
 				00F178BF1D11646700503A48 /* LWPhotoBaseViewController.swift */,
-				006A6A1B1D0FC01500861696 /* Sources */,
 			);
 			name = Claass;
-			sourceTree = "<group>";
-		};
-		006A6A1B1D0FC01500861696 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				006A6A131D0FC00E00861696 /* AGIPC-Checkmark-0.png */,
-				006A6A141D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png */,
-				006A6A151D0FC00E00861696 /* AGIPC-Checkmark-1.png */,
-				006A6A161D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png */,
-			);
-			name = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,12 +150,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0047BC161D0EA14C007A934F /* LaunchScreen.storyboard in Resources */,
-				006A6A181D0FC00E00861696 /* AGIPC-Checkmark-0@2x.png in Resources */,
-				006A6A191D0FC00E00861696 /* AGIPC-Checkmark-1.png in Resources */,
 				0047BC131D0EA14C007A934F /* Assets.xcassets in Resources */,
 				0047BC111D0EA14C007A934F /* Main.storyboard in Resources */,
-				006A6A1A1D0FC00E00861696 /* AGIPC-Checkmark-1@2x.png in Resources */,
-				006A6A171D0FC00E00861696 /* AGIPC-Checkmark-0.png in Resources */,
+				0071C6BF1DB08881008C61B3 /* LWPhotoPickerController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
